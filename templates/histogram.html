@@ -1,0 +1,58 @@
+{% extends "layout.html" %} {% block body %}
+<div class="container">
+    <div class="row font-ac-c mt-5">
+        {% if file_paths[2] %}
+        <div class="row mb-5">
+            <div class="col-md-4 text-center">
+                <h3>Image RGB</h3>
+                <img class="img-fluid image-frame" src="{{ url_for('static', filename='img/img_now.jpg') }}" alt="Image RGB" style="max-width: 300px; height: auto;">
+            </div>
+            <div class="col-md-7 ml-5 d-flex align-items-center">
+                <div>
+                    <h3>Keterangan</h3>
+                    <hr>
+                    <p class="custom-paragraph">
+                        Pada histogram berikut, sumbu-x menyatakan nilai kecerahan warna 
+                        dan sumbu-y menyatakan jumlah piksel pada kecerahan warna.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="row text-center mb-5">
+            <div class="col-md-4">
+                <h3>Red Histogram</h3>
+                <img class="img-fluid image-frame" src="{{ url_for('static', filename=file_paths[0]) }}" alt="Red Histogram">
+            </div>
+            <div class="col-md-4">
+                <h3>Green Histogram</h3>
+                <img class="img-fluid image-frame" src="{{ url_for('static', filename=file_paths[1]) }}" alt="Green Histogram">
+            </div>
+            <div class="col-md-4">
+                <h3>Blue Histogram</h3>
+                <img class="img-fluid image-frame" src="{{ url_for('static', filename=file_paths[2]) }}" alt="Blue Histogram">
+            </div>
+        </div>
+        {% else %}
+        <div class="col-md-6 mb-2 text-center">
+            <h3>Image Greyscaled</h3>
+            <img class="img-fluid image-frame" src="{{ url_for('static', filename='img/img_now.jpg') }}" alt="Image Greyscaled" style="max-width: 400px; height: auto;">
+        </div>
+        <div class="col-md-6 mb-2 text-center">
+            <h3>Black Histogram</h3>
+            <img class="img-fluid image-frame" src="{{ url_for('static', filename=file_paths[0]) }}" alt="Black Histogram" style="max-width: 400px; height: auto;">
+        </div>
+        <div>
+            <h3>Keterangan</h3>
+            <hr>
+            <p class="custom-paragraph">
+                Pada histogram di atas, sumbu-x menyatakan nilai derajat keabuan 
+                dan sumbu-y menyatakan jumlah piksel pada derajat keabuan.
+            </p>
+        </div>
+        {% endif %}
+        <div class="col-md-12 text-center mb-5">
+            <a href="javascript:history.go(-1)" class="btn btn-warning">Kembali</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

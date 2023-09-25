@@ -1,0 +1,18 @@
+{% extends "layout.html" %} {% block body %}
+<div class="container-fluid" style="height: 500px;">
+    <div>
+        <h3 class="text-center custom-subheading mt-5">Tugas <span style="color: orangered">Pengolahan Citra Digital </span>Praktek 11 September 2023.</h3>
+        <p class="text-center custom-paragraph mt-5">Unggah foto kamu sebelum menggunakan alat pemrosesan ini. Terdapat beberapa fitur untuk mengolah foto kamu.</p>
+        <div class="d-flex justify-content-center align-items-center" style="height: 250px">
+            <form id="" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+                <div class="input-group mb-3">
+                    <input name="file" type="file" class="form-control font-ac-c" placeholder="Choose file" accept="image/*">
+                    <div class="input-group-append">
+                      <button type="submit" class="btn btn-success font-ac-c">Upload</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,239 @@
+{% extends "layout.html" %} {% block body %}
+<div class="container-fluid">
+    <div class="row">
+        <!-- Sidebar Kiri -->
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+            <div class="position-sticky">
+                <ul class="nav flex-column font-ac-c">
+                    <li class="nav-item">
+                        <h4>Umum</h4>
+                        <div class="d-flex flex-wrap">
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('normal') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l80">Normal</button>
+                                </form>
+                            </div>
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('grayscale') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l80">Grayscale</button>
+                                </form>
+                            </div>
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('zoomin') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l80">Zoom In</button>
+                                </form>
+                            </div>
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('zoomout') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l80">Zoom Out</button>
+                                </form>
+                            </div>
+                        </div>
+                        <hr>
+                    </li>
+                    <li class="nav-item">
+                        <h4>Pergeseran</h4>
+                        <div class="d-flex flex-wrap">
+                            <div class="p-2 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('move_left') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l100">Geser Kiri</button>
+                                </form>
+                            </div>
+                            <div class="p-2 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('move_right') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l100">Geser Kanan</button>
+                                </form>
+                            </div>
+                            <div class="p-2 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('move_up') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l100">Geser Atas</button>
+                                </form>
+                            </div>
+                            <div class="p-2 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('move_down') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l100">Geser Bawah</button>
+                                </form>
+                            </div>
+                        </div>
+                        <hr>
+                    </li>
+                    <li class="nav-item">
+                        <h4>Penerangan</h4>
+                        <div class="d-flex flex-wrap">
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('brightness_multiplication') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l80">Terang (*)</button>
+                                </form>
+                            </div>
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('brightness_division') }}" method="POST"
+                                    enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l80">Gelap (/)</button>
+                                </form>
+                            </div>
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('brightness_addition') }}" method="POST"
+                                    enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l80">Terang (+)</button>
+                                </form>
+                            </div>
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('brightness_substraction') }}" method="POST"
+                                    enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l80">Gelap (-)</button>
+                                </form>
+                            </div>
+                        </div>
+                </ul>
+            </div>
+        </nav>
+
+        <!-- Hasil Pemrosesan -->
+        <main class="col-md-6 ms-sm-auto col-lg-8">
+            <div class="text-center font-ac-c">
+                <div class="mb-5">
+                    <h3>Before</h3>
+                    <img class="img-fluid image-frame" src="../static/img/img_normal.jpg" alt="image here">
+                </div>
+                <div>
+                    <h3>After</h3>
+                    <img class="img-fluid image-frame" src="{{ url_for('static', filename=file_path) }}" alt="image here">
+                </div>
+            </div>
+        </main>
+
+        <!-- Sidebar Kanan -->
+        <nav class="col-md-3 col-lg-2 d-md-block sidebar">
+            <div class="position-sticky">
+                <ul class="nav flex-column font-ac-c">
+                    <li class="nav-item">
+                        <h4>Analisis Gambar</h4>
+                        <div class="d-flex flex-wrap">
+                            <div class="flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('histogram_rgb') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l100">Histogram</button>
+                                </form>
+                            </div>
+                        </div>
+                        <hr>
+                    </li>
+                    <li class="nav-item">
+                        <h4>Pemrosesan Gambar</h4>
+                        <div class="d-flex flex-wrap">
+                            <div class="flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('histogram_equalizer') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l140">Histogram Equalizer</button>
+                                </form>
+                            </div>
+                        </div>
+                        <hr>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <h4>Filter Gambar</h4>
+                        <div class="d-flex flex-wrap">
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('edge_detection') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l140">Edge Detection</button>
+                                </form>
+                            </div>
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('blur') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l140">Blur</button>
+                                </form>
+                            </div>
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('sharpening') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l140">Sharpening</button>
+                                </form>
+                            </div>
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('identityKernel') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l140">Identity</button>
+                                </form>
+                            </div>
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('meanFilter') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l140">Mean Filter</button>
+                                </form>
+                            </div>
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('meanFilterK5') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l140">Mean Filter K5</button>
+                                </form>
+                            </div>
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('gaussianFilterK5') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l140">Gaussian Filter K5</button>
+                                </form>
+                            </div>
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('gaussianFilterK25') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l140">Gaussian Filter K25</button>
+                                </form>
+                            </div>
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('medianFilterK5') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l140">Median Filter K5</button>
+                                </form>
+                            </div>
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('medianFilterK25') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l140">Median Filter K25</button>
+                                </form>
+                            </div>
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('sharp') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l140">Sharp</button>
+                                </form>
+                            </div>
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('bilateralFilter') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l140">Bilateral</button>
+                                </form>
+                            </div>
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('zero_padding') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l140">Zero Padding</button>
+                                </form>
+                            </div>
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('lowpass_filter') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l140">Lowpass</button>
+                                </form>
+                            </div>
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('highpass_filter') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l140">Highpass</button>
+                                </form>
+                            </div>
+                            <div class="p-1 flex-fill bd-highlight">
+                                <form id="" action="{{ url_for('bandpass_filter') }}" method="POST" enctype="multipart/form-data">
+                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l140">Bandpass</button>
+                                </form>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <h4>Segmentation</h4>
+                        <div class="flex-fill bd-highlight">
+                            <form id="" action="{{ url_for('thresholding') }}" method="POST" enctype="multipart/form-data">
+                                <table class="table table-sm">
+                                    <tr>
+                                        <td><input type="number" name="upper_thres" placeholder="Upper (0-255)" class="custom-l160"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input type="number" name="lower_thres" placeholder="Lower (0-255)" class="custom-l160"></td>
+                                    </tr>
+                                    <tr>
+                                        <td><button type="submit" class="btn btn-sm btn-outline-success custom-l160">Thresholding</button></td>
+                                    </tr>
+                                </table>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+</div>
+{% endblock %}

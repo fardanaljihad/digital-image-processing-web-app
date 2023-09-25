@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PCD 11 September</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <style>
+        .custom-subheading {
+            font-family: Georgia, serif;
+            font-weight: bold;
+            font-size: 45px;
+            color: gray;
+        }
+        .custom-paragraph {
+            font-family: Apple Chancery, cursive;
+            font-weight: normal;
+            font-size: 20px;
+            color: gray;
+        }
+        .font-ac-c {
+            font-family: Apple Chancery, cursive;
+        }
+        .color-orangered {
+            color: orangered;
+        }
+        .custom-l80 {
+            width: 80px;
+        }
+        .custom-l100 {
+            width: 100px;
+        }
+        .custom-l140 {
+            width: 145px;
+        }
+        .custom-l160 {
+            width: 160px;
+        }
+        .image-frame {
+            border: 2px solid #000;
+            padding: 10px;
+            display: inline-block;
+        }
+        bio-cont {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+        .biodata {
+            display: flex;
+            align-items: center;
+            padding: 5px;
+            width: 600px;
+            height: 300px;
+            background-color: #f5f5f5;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        }
+        .bio-text {
+            font-family: 'Roboto Mono', monospace;
+            font-weight: normal;
+            font-size: 15px;
+            color: black;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-spacing: 0;
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: center;
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+        td {
+            padding: 8px;
+            border-bottom: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    {% include "includes/_navbar.html" %}
+    <div class="container-fluid">
+        {% block body %} {% endblock %}
+    </div>
+</body>
+
+</html>
