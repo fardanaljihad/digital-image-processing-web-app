@@ -479,7 +479,7 @@ def kernel_highpass(i):
             if baris == i - 1 and kolom == i - 1:
                 baris_matriks.append(-sum)
             else:
-                nilai_acak = random.randint(-25, 25)
+                nilai_acak = random.randint(-10, 10)
                 baris_matriks.append(nilai_acak)
                 sum += nilai_acak
         matriks.append(baris_matriks)
@@ -495,14 +495,14 @@ def kernel_bandpass(i):
     for baris in range(i):
         baris_matriks = []
         for kolom in range(i):
-            nilai_acak = random.randint(-25, 25) 
+            nilai_acak = random.randint(-10, 10) 
             baris_matriks.append(nilai_acak)
             sum += nilai_acak
         matriks.append(baris_matriks)
     
-    while sum == 0:
+    while sum < 0:
         matriks.pop
-        matriks.append(random.randint(-100, 100))
+        matriks.append(random.randint(-10, 10))
         
     # matriks = [[-1,-1,-1], [-1,9,-1], [-1,-1,-1]]
         
