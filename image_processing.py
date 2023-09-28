@@ -7,6 +7,7 @@ from collections import Counter
 from pylab import savefig
 import cv2
 from skimage import io
+import random
 matplotlib.use("Agg")
 
 
@@ -461,3 +462,43 @@ def bandPassFilter():
     # apply the band pass filter to the image
     bandFilterImage = cv2.filter2D(image,-1,bandFilter)
     cv2.imwrite("static/img/img_now.jpg", bandFilterImage)
+
+# 
+def kernel_lowpass(i):
+    elemen = 1.0 / (i * i)
+    matriks = [[elemen for _ in range(i)] for _ in range(i)]
+    return matriks
+
+
+def kernel_highpass(i):
+    matriks = []
+    sum = 0
+    for baris in range(i):
+        baris_matriks = []
+        for kolom in range(i):
+            if baris == i - 1 and kolom == i - 1:
+                baris_matriks.append(-sum)
+            else:
+                nilai_acak = random.randint(-100, 100)
+                baris_matriks.append(nilai_acak)
+                sum += nilai_acak
+        matriks.append(baris_matriks)
+    return matriks
+
+
+def kernel_bandpass(i):
+    matriks = []
+    sum = 0
+    for baris in range(i):
+        baris_matriks = []
+        for kolom in range(i):
+            nilai_acak = random.randint(-100, 100) 
+            baris_matriks.append(nilai_acak)
+            sum += nilai_acak
+        matriks.append(baris_matriks)
+    
+    while sum == 0:
+        matriks.pop
+        matriks.append(random.randint(-100, 100))
+        
+    return matriks
