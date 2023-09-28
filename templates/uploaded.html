@@ -198,17 +198,38 @@
                             </div>
                             <div class="p-1 flex-fill bd-highlight">
                                 <form id="" action="{{ url_for('lowpass_filter') }}" method="POST" enctype="multipart/form-data">
-                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l140">Lowpass</button>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td><input type="number" name="kernel_size" placeholder="Kernel Size" class="custom-l160"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><button type="submit" class="btn btn-sm btn-outline-success custom-l160">Lowpass Filter</button></td>
+                                        </tr>
+                                    </table>
                                 </form>
                             </div>
                             <div class="p-1 flex-fill bd-highlight">
                                 <form id="" action="{{ url_for('highpass_filter') }}" method="POST" enctype="multipart/form-data">
-                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l140">Highpass</button>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td><input type="number" name="kernel_size" placeholder="Kernel Size" class="custom-l160"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><button type="submit" class="btn btn-sm btn-outline-success custom-l160">Highpass Filter</button></td>
+                                        </tr>
+                                    </table>
                                 </form>
                             </div>
                             <div class="p-1 flex-fill bd-highlight">
                                 <form id="" action="{{ url_for('bandpass_filter') }}" method="POST" enctype="multipart/form-data">
-                                    <button type="submit" class="btn btn-sm btn-outline-success custom-l140">Bandpass</button>
+                                    <table class="table table-sm">
+                                        <tr>
+                                            <td><input type="number" name="kernel_size" placeholder="Kernel Size" class="custom-l160"></td>
+                                        </tr>
+                                        <tr>
+                                            <td><button type="submit" class="btn btn-sm btn-outline-success custom-l160">Bandpass Filter</button></td>
+                                        </tr>
+                                    </table>
                                 </form>
                             </div>
                         </div>

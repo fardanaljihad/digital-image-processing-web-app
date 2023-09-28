@@ -277,21 +277,24 @@ def zero_padding():
 @app.route("/lowpassfilter", methods=["POST"])
 @nocache
 def lowpass_filter():
-    image_processing.lowPassFilter()
+    kernel_size = int(request.form['kernel_size'])
+    image_processing.lowPassFilter(kernel_size)
     return render_template("uploaded.html", file_path="img/img_now.jpg")
 
 
 @app.route("/highpassfilter", methods=["POST"])
 @nocache
 def highpass_filter():
-    image_processing.highPassFilter()
+    kernel_size = int(request.form['kernel_size'])
+    image_processing.highPassFilter(kernel_size)
     return render_template("uploaded.html", file_path="img/img_now.jpg")
 
 
 @app.route("/bandpassfilter", methods=["POST"])
 @nocache
 def bandpass_filter():
-    image_processing.bandPassFilter()
+    kernel_size = int(request.form['kernel_size'])
+    image_processing.bandPassFilter(kernel_size)
     return render_template("uploaded.html", file_path="img/img_now.jpg")
 
 

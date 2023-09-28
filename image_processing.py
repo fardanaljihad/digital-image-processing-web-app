@@ -434,31 +434,31 @@ def zeroPadding():
     cv2.imwrite("static/img/img_now.jpg", zp)
     
     
-def lowPassFilter():
+def lowPassFilter(kernel_size):
     image_0 = io.imread("static/img/img_now.jpg")
     image = cv2.cvtColor(image_0, cv2.COLOR_BGR2RGB)
     # create the low pass filter
-    lowFilter = np.ones((3,3),np.float32)/9
+    lowFilter = np.array(kernel_lowpass(kernel_size))
     # apply the low pass filter to the image
     lowFilterImage = cv2.filter2D(image,-1,lowFilter)
     cv2.imwrite("static/img/img_now.jpg", lowFilterImage)
     
 
-def highPassFilter():
+def highPassFilter(kernel_size):
     image_0 = io.imread("static/img/img_now.jpg")
     image = cv2.cvtColor(image_0, cv2.COLOR_BGR2RGB)
     # create the high pass filter
-    highFilter = np.array([[-1,-1,-1],[-1,8,-1],[-1,-1,-1]])
+    highFilter = np.array(kernel_highpass(kernel_size))
     # apply the high pass filter to the image
     highFilterImage = cv2.filter2D(image,-1,highFilter)
     cv2.imwrite("static/img/img_now.jpg", highFilterImage)
     
 
-def bandPassFilter():
+def bandPassFilter(kernel_size):
     image_0 = io.imread("static/img/img_now.jpg")
     image = cv2.cvtColor(image_0, cv2.COLOR_BGR2RGB)
     # create the band pass filter
-    bandFilter = np.array([[0,-1,0],[-1,5,-1],[0,-1,0]])
+    bandFilter = np.array(kernel_bandpass(kernel_size))
     # apply the band pass filter to the image
     bandFilterImage = cv2.filter2D(image,-1,bandFilter)
     cv2.imwrite("static/img/img_now.jpg", bandFilterImage)
@@ -479,10 +479,13 @@ def kernel_highpass(i):
             if baris == i - 1 and kolom == i - 1:
                 baris_matriks.append(-sum)
             else:
-                nilai_acak = random.randint(-100, 100)
+                nilai_acak = random.randint(-25, 25)
                 baris_matriks.append(nilai_acak)
                 sum += nilai_acak
         matriks.append(baris_matriks)
+        
+    # matriks = [[-1,-1,-1], [-1,8,-1], [-1,-1,-1]]
+    
     return matriks
 
 
@@ -492,7 +495,7 @@ def kernel_bandpass(i):
     for baris in range(i):
         baris_matriks = []
         for kolom in range(i):
-            nilai_acak = random.randint(-100, 100) 
+            nilai_acak = random.randint(-25, 25) 
             baris_matriks.append(nilai_acak)
             sum += nilai_acak
         matriks.append(baris_matriks)
@@ -500,5 +503,7 @@ def kernel_bandpass(i):
     while sum == 0:
         matriks.pop
         matriks.append(random.randint(-100, 100))
+        
+    # matriks = [[-1,-1,-1], [-1,9,-1], [-1,-1,-1]]
         
     return matriks
