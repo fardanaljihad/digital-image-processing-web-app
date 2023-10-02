@@ -114,6 +114,10 @@
 
         var citraTerbuka = [];
 
+        // Mendapatkan referensi ke elemen h3 berdasarkan ID
+        var scoreElement = document.getElementById('score');
+        var currentScore = 0;
+
         // Tambahkan event listener untuk setiap gambar
         gambarClickable.forEach(function(gambar) {
             gambar.addEventListener('click', function() {
@@ -133,15 +137,26 @@
                 if (citraTerbuka.length === 2) {
                     // Periksa apakah gambar yang sama dengan yang saat ini sedang terbuka
                     if (citraTerbuka[0] === citraTerbuka[1]) {
+                        currentScore++; // Tambahkan score
+                        scoreElement.textContent = 'Score: ' + currentScore;
                         // Tampilkan kedua gambar tersebut selama 1 detik
                         setTimeout(function() {
                             document.querySelectorAll('[data-image="' + namaGambar + '"]').forEach(function(elemen) {
-                                elemen.setAttribute('src', 'static/img/back_of_card.jpg');
+                                var prevElement = document.querySelector('[data-image="' + citraTerbuka[0] + '"]')
+                                prevElement.style.display = 'none';
+                                elemen.style.display = 'none';
                             });
                             citraTerbuka = [];
                         }, 1000); // Tampilkan selama 1 detik (1000 milidetik)
                     } else {
-                        citraTerbuka = []
+                        setTimeout(function() {
+                            document.querySelectorAll('[data-image="' + namaGambar + '"]').forEach(function(elemen) {
+                                var prevElement = document.querySelector('[data-image="' + citraTerbuka[0] + '"]')
+                                prevElement.setAttribute('src', 'static/img/back_of_card.jpg');
+                                elemen.setAttribute('src', 'static/img/back_of_card.jpg');
+                            });
+                            citraTerbuka = [];
+                        }, 5000); // Tampilkan selama 1 detik (1000 milidetik)
                     }
                 }
             });

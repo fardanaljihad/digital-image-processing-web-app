@@ -6,7 +6,6 @@
     <div class="gambar-container">
         {% for i in range(28) %}
         <div class="gambar-item">
-            <p>{{ citra_paths[i] }}</p>
             <img id="img-{{ i }}" class="gambar-clickable" src="static/img/back_of_card.jpg" alt="Gambar {{ i }}" data-image="{{ citra_paths[i] }}">
         </div>
         {% if (i + 1) % 7 == 0 %}
