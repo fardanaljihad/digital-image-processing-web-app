@@ -298,5 +298,24 @@ def bandpass_filter():
     return render_template("uploaded.html", file_path="img/img_now.jpg")
 
 
+# Week 7
+@app.route("/flip_card", methods=["POST"])
+@nocache
+def flip_card():
+    image_processing.flip_card()
+    citra_folder = 'static/img/flip-card'
+    citra_paths_1 = os.listdir(citra_folder)
+    citra_paths_2 = citra_paths_1
+    
+    random.shuffle(citra_paths_1)
+    random.shuffle(citra_paths_2)
+    
+    citra_paths = citra_paths_1 + citra_paths_2
+    
+    print(citra_paths)
+    
+    return render_template("flipcard.html", citra_paths=citra_paths)
+
+
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0")

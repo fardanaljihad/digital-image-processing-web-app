@@ -501,9 +501,184 @@ def kernel_bandpass(i):
         matriks.append(baris_matriks)
     
     while sum < 0:
-        matriks.pop
-        matriks.append(random.randint(-10, 10))
+        matriks[2][2] = 1
+        sum += 1
         
     # matriks = [[-1,-1,-1], [-1,9,-1], [-1,-1,-1]]
         
     return matriks
+
+
+# Week 7
+def normal():
+    img = Image.open("static/img/img_now.jpg")
+    img.save("static/img/flip-card/img_normal.jpg")
+
+def grayscale_v2():
+    if not is_grey_scale("static/img/img_now.jpg"):
+        img = Image.open("static/img/img_now.jpg")
+        img_arr = np.asarray(img)
+        r = img_arr[:, :, 0]
+        g = img_arr[:, :, 1]
+        b = img_arr[:, :, 2]
+        new_arr = r.astype(int) + g.astype(int) + b.astype(int)
+        new_arr = (new_arr/3).astype('uint8')
+        new_img = Image.fromarray(new_arr)
+        new_img.save("static/img/flip-card/img_grayscale.jpg")
+        
+
+def move_left_v2():
+    img = Image.open("static/img/img_now.jpg")
+    img_arr = np.asarray(img)
+    if is_grey_scale("static/img/img_now.jpg"):
+        img_arr = np.pad(img_arr, ((0, 0), (0, 50)), 'constant')[:, 50:]
+    else:
+        r, g, b = img_arr[:, :, 0], img_arr[:, :, 1], img_arr[:, :, 2]
+        r = np.pad(r, ((0, 0), (0, 50)), 'constant')[:, 50:]
+        g = np.pad(g, ((0, 0), (0, 50)), 'constant')[:, 50:]
+        b = np.pad(b, ((0, 0), (0, 50)), 'constant')[:, 50:]
+        img_arr = np.dstack((r, g, b))
+
+    new_img = Image.fromarray(img_arr)
+    new_img.save("static/img/flip-card/img_move_left.jpg")
+
+def move_right_v2():
+    img = Image.open("static/img/img_now.jpg")
+    img_arr = np.asarray(img)
+    if is_grey_scale("static/img/img_now.jpg"):
+        img_arr = np.pad(img_arr, ((0, 0), (50, 0)), 'constant')[:, :-50]
+    else:
+        r, g, b = img_arr[:, :, 0], img_arr[:, :, 1], img_arr[:, :, 2]
+        r = np.pad(r, ((0, 0), (50, 0)), 'constant')[:, :-50]
+        g = np.pad(g, ((0, 0), (50, 0)), 'constant')[:, :-50]
+        b = np.pad(b, ((0, 0), (50, 0)), 'constant')[:, :-50]
+        img_arr = np.dstack((r, g, b))
+
+    new_img = Image.fromarray(img_arr)
+    new_img.save("static/img/flip-card/img_move_right.jpg")
+
+def move_up_v2():
+    img = Image.open("static/img/img_now.jpg")
+    img_arr = np.asarray(img)
+    if is_grey_scale("static/img/img_now.jpg"):
+        img_arr = np.pad(img_arr, ((0, 50), (0, 0)), 'constant')[50:, :]
+    else:
+        r, g, b = img_arr[:, :, 0], img_arr[:, :, 1], img_arr[:, :, 2]
+        r = np.pad(r, ((0, 50), (0, 0)), 'constant')[50:, :]
+        g = np.pad(g, ((0, 50), (0, 0)), 'constant')[50:, :]
+        b = np.pad(b, ((0, 50), (0, 0)), 'constant')[50:, :]
+        img_arr = np.dstack((r, g, b))
+
+    new_img = Image.fromarray(img_arr)
+    new_img.save("static/img/flip-card/img_move_up.jpg")
+
+
+def move_down_v2():
+    img = Image.open("static/img/img_now.jpg")
+    img_arr = np.asarray(img)
+    if is_grey_scale("static/img/img_now.jpg"):
+        img_arr = np.pad(img_arr, ((50, 0), (0, 0)), 'constant')[0:-50, :]
+    else:
+        r, g, b = img_arr[:, :, 0], img_arr[:, :, 1], img_arr[:, :, 2]
+        r = np.pad(r, ((50, 0), (0, 0)), 'constant')[0:-50, :]
+        g = np.pad(g, ((50, 0), (0, 0)), 'constant')[0:-50, :]
+        b = np.pad(b, ((50, 0), (0, 0)), 'constant')[0:-50, :]
+        img_arr = np.dstack((r, g, b))
+
+    new_img = Image.fromarray(img_arr)
+    new_img.save("static/img/flip-card/img_move_down.jpg")
+    
+    
+def brightness_addition_v2():
+    img = Image.open("static/img/img_now.jpg")
+    img_arr = np.asarray(img).astype('uint16')
+    img_arr = img_arr+100
+    img_arr = np.clip(img_arr, 0, 255)
+    new_arr = img_arr.astype('uint8')
+    new_img = Image.fromarray(new_arr)
+    new_img.save("static/img/flip-card/img_brightness_add.jpg")
+
+
+def brightness_substraction_v2():
+    img = Image.open("static/img/img_now.jpg")
+    img_arr = np.asarray(img).astype('int16')
+    img_arr = img_arr-100
+    img_arr = np.clip(img_arr, 0, 255)
+    new_arr = img_arr.astype('uint8')
+    new_img = Image.fromarray(new_arr)
+    new_img.save("static/img/flip-card/img_brightness_subs.jpg")
+    
+    
+def edge_detection_v2():
+    img = Image.open("static/img/img_now.jpg")
+    img_arr = np.asarray(img, dtype=int)
+    kernel = np.array([[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]])
+    new_arr = convolution(img_arr, kernel)
+    new_img = Image.fromarray(new_arr)
+    new_img.save("static/img/flip-card/img_edge_detect.jpg")
+
+
+def blur_v2():
+    img = Image.open("static/img/img_now.jpg")
+    img_arr = np.asarray(img, dtype=int)
+    kernel = np.array(
+        [[0.0625, 0.125, 0.0625], [0.125, 0.25, 0.125], [0.0625, 0.125, 0.0625]])
+    new_arr = convolution(img_arr, kernel)
+    new_img = Image.fromarray(new_arr)
+    new_img.save("static/img/flip-card/img_blur.jpg")
+
+
+def sharpening_v2():
+    img = Image.open("static/img/img_now.jpg")
+    img_arr = np.asarray(img, dtype=int)
+    kernel = np.array([[0, -1, 0], [-1, 5, -1], [0, -1, 0]])
+    new_arr = convolution(img_arr, kernel)
+    new_img = Image.fromarray(new_arr)
+    new_img.save("static/img/flip-card/img_sharpening.jpg")
+    
+
+def lowPassFilterV2(kernel_size):
+    image_0 = io.imread("static/img/img_now.jpg")
+    image = cv2.cvtColor(image_0, cv2.COLOR_BGR2RGB)
+    # create the low pass filter
+    lowFilter = np.array(kernel_lowpass(kernel_size))
+    # apply the low pass filter to the image
+    lowFilterImage = cv2.filter2D(image,-1,lowFilter)
+    cv2.imwrite("static/img/flip-card/img_low.jpg", lowFilterImage)
+    
+
+def highPassFilterV2(kernel_size):
+    image_0 = io.imread("static/img/img_now.jpg")
+    image = cv2.cvtColor(image_0, cv2.COLOR_BGR2RGB)
+    # create the high pass filter
+    highFilter = np.array(kernel_highpass(kernel_size))
+    # apply the high pass filter to the image
+    highFilterImage = cv2.filter2D(image,-1,highFilter)
+    cv2.imwrite("static/img/flip-card/img_high.jpg", highFilterImage)
+    
+
+def bandPassFilterV2(kernel_size):
+    image_0 = io.imread("static/img/img_now.jpg")
+    image = cv2.cvtColor(image_0, cv2.COLOR_BGR2RGB)
+    # create the band pass filter
+    bandFilter = np.array(kernel_bandpass(kernel_size))
+    # apply the band pass filter to the image
+    bandFilterImage = cv2.filter2D(image,-1,bandFilter)
+    cv2.imwrite("static/img/flip-card/img_band.jpg", bandFilterImage)
+
+
+def flip_card():
+    normal()
+    grayscale_v2()
+    move_left_v2()
+    move_right_v2()
+    move_up_v2()
+    move_down_v2()
+    brightness_addition_v2()
+    brightness_substraction_v2()
+    edge_detection_v2()
+    blur_v2()
+    sharpening_v2()
+    lowPassFilterV2(5)
+    highPassFilterV2(5)
+    bandPassFilterV2(5)

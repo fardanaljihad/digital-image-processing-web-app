@@ -81,6 +81,24 @@
             padding: 8px;
             border-bottom: 1px solid #ddd;
         }
+
+        .gambar-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .gambar-item {
+            text-align: center;
+            margin: 5px;
+        }
+
+        .gambar-item img {
+            height: 200px;
+            width: 100px;
+            border: 1px solid #ccc;
+            box-shadow: 2px 2px 5px #888888;
     </style>
 </head>
 
@@ -89,6 +107,46 @@
     <div class="container-fluid">
         {% block body %} {% endblock %}
     </div>
+
+    <script>
+        // Dapatkan semua elemen gambar dengan kelas "gambar-clickable"
+        var gambarClickable = document.querySelectorAll('.gambar-clickable');
+
+        var citraTerbuka = [];
+
+        // Tambahkan event listener untuk setiap gambar
+        gambarClickable.forEach(function(gambar) {
+            gambar.addEventListener('click', function() {
+                // Dapatkan nama gambar dari atribut data-image
+                var namaGambar = gambar.getAttribute('data-image');
+
+                let citraNow = gambar.getAttribute('src');
+                
+                // Ganti atribut src dengan gambar depannya
+                if(citraNow === "static/img/back_of_card.jpg") {
+                    gambar.setAttribute('src', 'static/img/flip-card/' + namaGambar);
+                    citraTerbuka.push(namaGambar)
+                } else {
+                    gambar.setAttribute('src', 'static/img/back_of_card.jpg');
+                }
+                
+                if (citraTerbuka.length === 2) {
+                    // Periksa apakah gambar yang sama dengan yang saat ini sedang terbuka
+                    if (citraTerbuka[0] === citraTerbuka[1]) {
+                        // Tampilkan kedua gambar tersebut selama 1 detik
+                        setTimeout(function() {
+                            document.querySelectorAll('[data-image="' + namaGambar + '"]').forEach(function(elemen) {
+                                elemen.setAttribute('src', 'static/img/back_of_card.jpg');
+                            });
+                            citraTerbuka = [];
+                        }, 1000); // Tampilkan selama 1 detik (1000 milidetik)
+                    } else {
+                        citraTerbuka = []
+                    }
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
