@@ -307,10 +307,9 @@ def flip_card():
     citra_paths_1 = os.listdir(citra_folder)
     citra_paths_2 = citra_paths_1
     
-    random.shuffle(citra_paths_1)
-    random.shuffle(citra_paths_2)
-    
     citra_paths = citra_paths_1 + citra_paths_2
+    
+    random.shuffle(citra_paths)
     
     print(citra_paths)
     
