@@ -103,13 +103,19 @@
         <!-- Hasil Pemrosesan -->
         <main class="col-md-6 ms-sm-auto col-lg-8">
             <div class="text-center font-ac-c">
-                <div class="mb-5">
-                    <h3>Before</h3>
-                    <img class="img-fluid image-frame" src="../static/img/img_normal.jpg" alt="image here">
-                </div>
-                <div>
-                    <h3>After</h3>
-                    <img class="img-fluid image-frame" src="{{ url_for('static', filename=file_path) }}" alt="image here">
+                <div class="row mt-5">
+                    <div class="col-6">
+                        <div class="ml-5">
+                            <h3>Before</h3>
+                            <img class="img-fluid image-frame" src="../static/img/img_normal.jpg" alt="image here">
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="mr-5">
+                            <h3>After</h3>
+                            <img class="img-fluid image-frame" src="{{ url_for('static', filename=file_path) }}" alt="image here">
+                        </div>
+                    </div>
                 </div>
             </div>
         </main>
