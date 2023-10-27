@@ -8,6 +8,7 @@ from pylab import savefig
 import cv2
 from skimage import io
 import random
+from dotenv import dotenv_values
 matplotlib.use("Agg")
 
 
@@ -682,3 +683,128 @@ def flip_card():
     lowPassFilterV2(5)
     highPassFilterV2(5)
     bandPassFilterV2(5)
+    
+    
+# Week 10
+# Fungsi untuk mendapatkan Freeman Chain Code
+def freeman_chain_code(contour):
+    chain_code = []
+    
+    # Daftar arah Freeman Chain Code
+    directions = [0, 1, 2, 3, 4, 5, 6, 7]
+
+    # Titik awal
+    start_point = contour[0][0]
+    current_point = start_point
+
+    # Loop untuk mengikuti garis kontur
+    for point in contour[1:]:
+        x, y = point[0]
+        dx = x - current_point[0]
+        dy = y - current_point[1]
+        direction = None
+
+        # Tentukan arah berdasarkan perubahan koordinat
+        if dx == 1 and dy == 0:
+            direction = 0
+        elif dx == 1 and dy == -1:
+            direction = 1
+        elif dx == 0 and dy == -1:
+            direction = 2
+        elif dx == -1 and dy == -1:
+            direction = 3
+        elif dx == -1 and dy == 0:
+            direction = 4
+        elif dx == -1 and dy == 1:
+            direction = 5
+        elif dx == 0 and dy == 1:
+            direction = 6
+        elif dx == 1 and dy == 1:
+            direction = 7
+        
+        if direction is not None:
+            chain_code.append(direction)
+            current_point = (x, y)
+
+    return chain_code
+
+# Fungsi untuk thinning
+def thinning(img):
+    size = np.size(img)
+    thinned = np.zeros(img.shape, np.uint8)
+    ret, img = cv2.threshold(img, 127, 255, 0)
+    element = cv2.getStructuringElement(cv2.MORPH_CROSS, (3, 3))
+    img = 255 - img
+
+    done = False
+
+    while not done:
+        eroded = cv2.erode(img, element)
+        temp = cv2.dilate(eroded, element)
+        temp = cv2.subtract(img, temp)
+        thinned = cv2.bitwise_or(thinned, temp)
+        img = eroded.copy()
+        zeros = size - cv2.countNonZero(img)
+        if zeros == size:
+            done = True
+
+    return thinned
+
+# Metode 1
+def method_1():
+    img = cv2.imread("static/img/img_now.jpg")
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+
+    # Menerapkan thresholding
+    ret, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+
+    # Mengidentifikasi kontur pada citra biner
+    contours, _ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+
+    if len(contours) > 0:
+        # Menghitung Freeman Chain Code untuk kontur pertama (kita anggap hanya ada satu objek)
+        chain_code = freeman_chain_code(contours[0])
+        print(f"Freeman Chain Code: \n{chain_code}")
+
+        # Gambar kontur pada citra asli
+        img_with_contours = cv2.drawContours(img.copy(), contours, 0, (0, 255, 0), 2)
+
+        # Konversi citra OpenCV ke format yang dapat digunakan oleh Matplotlib
+        img_rgb = cv2.cvtColor(img_with_contours, cv2.COLOR_BGR2RGB)
+        
+        # Simpan citra
+        cv2.imwrite("static/img/number-recognition/img_result_1.jpg", img_rgb)
+    else:
+        print(f"Tidak ada kontur yang ditemukan")
+        
+        
+def detect_digits():
+    # Load Freeman Chain Codes from .env file
+    env_file = ".env"
+    env_data = dotenv_values(env_file)
+    angka_chain_codes = {}
+    for key, value in env_data.items():
+        if key.startswith("CITRA_") and key.endswith("_CHAIN_CODE"):
+            angka = key.replace("_chain_code", "")
+            angka_chain_codes[angka] = [int(x) for x in value.split(',')]
+        
+    img = cv2.imread("static/img/img_now.jpg")
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    ret, thresh = cv2.threshold(gray, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+    contours, _ = cv2.findContours(thresh, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
+
+    # Sort contours from left to right based on x-coordinate
+    contours = sorted(contours, key=lambda c: cv2.boundingRect(c)[0])
+
+    recognized_digits = []
+
+    for contour in contours:
+        # Calculate Freeman Chain Code
+        chain_code = freeman_chain_code(contour)
+
+        for angka, chain_code_angka in angka_chain_codes.items():
+            if ''.join(map(str, chain_code_angka)) in ''.join(map(str, chain_code)):
+                recognized_digits.append(int(angka.split('_')[1]))  # Convert angka string to integer
+
+
+    return recognized_digits

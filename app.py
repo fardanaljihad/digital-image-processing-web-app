@@ -316,5 +316,12 @@ def flip_card():
     return render_template("flipcard.html", citra_paths=citra_paths)
 
 
+# Week 10
+@app.route("/number-recognition", methods=["POST"])
+@nocache
+def number_recognition():
+    recognized_digits = image_processing.detect_digits()
+    return render_template("number_recognition.html", result=recognized_digits)
+
 if __name__ == '__main__':
     app.run(debug=True, host="0.0.0.0")

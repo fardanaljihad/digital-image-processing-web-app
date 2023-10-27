@@ -1,0 +1,16 @@
+{% extends "layout.html" %}
+{% block body %}
+<div class="container mt-5">
+    <div class="row font-ac-c">
+        <div class="col-md-12 text-center">
+            <img class="img-fluid image-frame mb-3" src="{{ url_for('static', filename='img/img_now.jpg') }}" alt="Image RGB" style="max-width: 150px; height: 150px;">
+            <p>Recognized Digits: {{ result }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 text-center mt-5">
+            <a href="javascript:history.go(-1)" class="btn btn-warning">Kembali</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
